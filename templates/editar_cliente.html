@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Editar Cliente</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label>NIF</label>
+        <input type="text" name="NIF" class="form-control" value="{{ cliente['NIF'] }}" readonly>
+    </div>
+    <div class="mb-3">
+        <label>Nombre</label>
+        <input type="text" name="nombre" class="form-control" value="{{ cliente['nombre'] }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Dirección</label>
+        <input type="text" name="direccion" class="form-control" value="{{ cliente['direccion'] }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Teléfono</label>
+        <input type="text" name="telefono" class="form-control" value="{{ cliente['telefono'] }}" required>
+    </div>
+    <button type="submit" class="btn btn-success">Actualizar Cliente</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-4">Agregar Cliente</h2>
+
+<form method="POST" action="{{ url_for('clientes') }}" class="border p-4 rounded bg-light shadow-sm">
+    <div class="mb-3">
+        <label for="NIF" class="form-label">NIF</label>
+        <input type="text" name="NIF" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" name="nombre" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección</label>
+        <input type="text" name="direccion" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <input type="text" name="telefono" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar Cliente</button>
+</form>
+
+<hr class="my-4">
+
+<h3>Clientes Registrados</h3>
+<table class="table table-striped table-bordered table-hover align-middle">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>NIF</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ cliente['NIF'] }}</td>
+            <td>{{ cliente['nombre'] }}</td>
+            <td>{{ cliente['direccion'] }}</td>
+            <td>{{ cliente['telefono'] }}</td>
+            <td>
+                <a href="{{ url_for('editar_cliente', NIF=cliente['NIF']) }}" class="btn btn-warning btn-sm">Editar</a>
+                <form action="{{ url_for('eliminar_cliente', NIF=cliente['NIF']) }}" method="post" style="display:inline-block;">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-center text-muted">No hay clientes registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

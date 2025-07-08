@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-4">Agregar Revisión</h2>
+
+<form method="POST" action="{{ url_for('revisiones') }}" class="border p-4 rounded bg-light shadow-sm">
+    <div class="mb-3">
+        <label for="codigo" class="form-label">Código de Revisión</label>
+        <input type="number" name="codigo" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="filtro" class="form-label">Filtro</label>
+        <input type="text" name="filtro" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="aceite" class="form-label">Aceite</label>
+        <input type="text" name="aceite" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="frenos" class="form-label">Frenos</label>
+        <input type="text" name="frenos" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="matricula_coche" class="form-label">Coche (Matrícula)</label>
+        <select name="matricula_coche" class="form-control" required>
+            <option value="">Seleccione un coche</option>
+            {% for coche in coches %}
+            <option value="{{ coche.matricula }}">{{ coche.marca }} {{ coche.modelo }} ({{ coche.matricula }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Revisión</button>
+</form>
+
+<hr class="my-4">
+
+<h3>Revisiones Registradas</h3>
+<table class="table table-striped table-bordered table-hover align-middle">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>Código</th>
+            <th>Filtro</th>
+            <th>Aceite</th>
+            <th>Frenos</th>
+            <th>Matrícula Coche</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for revision in revisiones %}
+        <tr>
+            <td>{{ revision['codigo'] }}</td>
+            <td>{{ revision['filtro'] }}</td>
+            <td>{{ revision['aceite'] }}</td>
+            <td>{{ revision['frenos'] }}</td>
+            <td>{{ revision['matricula_coche'] }}</td>
+            <td>
+                <a href="{{ url_for('editar_revision', codigo=revision['codigo']) }}" class="btn btn-warning btn-sm">Editar</a>
+                <form action="{{ url_for('eliminar_revision', codigo=revision['codigo']) }}" method="post" style="display:inline-block;">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="text-center">No hay revisiones registradas.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
